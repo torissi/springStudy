@@ -10,15 +10,16 @@ class RestaurantTests {
 
     @Test
     public void creation() {
-        Restaurant restaurant = new Restaurant("Bap zip", ""); //Bap zip은 가게 주소
-        assertThat(restaurant.getName()).isEqualTo("Bap zip");
+        Restaurant restaurant = new Restaurant(1004L,"Bab zip", "Seoul"); //Bap zip은 가게 주소
+        assertThat(restaurant.getId()).isEqualTo(1004L);
+        assertThat(restaurant.getName()).isEqualTo("Bab zip");
         assertThat(restaurant.getAddress()).isEqualTo("Seoul");
     }
 
     @Test
     public void information() {
-        Restaurant restaurant = new Restaurant("Bap zip", "Seoul");
-        assertThat(restaurant.getInformation()).isEqualTo("Bap zip in Seoul");
+        Restaurant restaurant = new Restaurant(1004L, "Bab zip", "Seoul");
+        assertThat(restaurant.getInformation()).isEqualTo("Bab zip in Seoul");
 
     }
 }
