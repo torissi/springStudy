@@ -60,8 +60,14 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
 - application 패키지를 만들고 필요한 것을 확인하기 위해 Menu Item이라는 도메인 모델을 만들 예정
 - application layer에는 RestaurantService라는 객체가 들어가고, 복잡한 로직들을 모아서 처리할 예정
 
+- service를 만들기 전에는 controller가 웹에 대한 처리만 해야하는데 repository 두 개가 얽혀 있어
+  그 것에 대한 처리도 해야했음
+- 지금은 service에서 repository에 대한 모든 것을 처리함
+- service는 더이상 웹이 어떻게 처리되는지 알 필요가 없고
+- 단순히 repository들을 통해 어떤 결과를 보여줘야 하는지에 대한 본질적인 작업에 집중할 수 있음
 
-
+- test 코드를 통해 믿을 수 있는 service 기능을 구현함
+- 여전히 SpyBean으로 복잡하게 test코드에 여러 객체를 주입하는데, 가짜 객체를 이용하여 간단하게 할 예정
 
 
 

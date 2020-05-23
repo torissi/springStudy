@@ -1,5 +1,6 @@
 package com.example.restaurant.interfaces;
 
+import com.example.restaurant.application.RestaurantService;
 import com.example.restaurant.domain.MenuItemRepository;
 import com.example.restaurant.domain.MenuItemRepositoryImpl;
 import com.example.restaurant.domain.RestaurantRepository;
@@ -31,6 +32,9 @@ class RestaurantControllerTest {
 
     @SpyBean(MenuItemRepositoryImpl.class)
     private MenuItemRepository menuItemRepository;
+
+    @SpyBean(RestaurantService.class)
+    private RestaurantService restaurantService;
 
     @Test
     public void list() throws Exception { //perform에서는 예외가 나올 수 있기 때문에 예외처리 해줌
