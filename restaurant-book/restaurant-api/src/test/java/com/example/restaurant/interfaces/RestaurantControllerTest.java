@@ -1,5 +1,7 @@
 package com.example.restaurant.interfaces;
 
+import com.example.restaurant.domain.MenuItemRepository;
+import com.example.restaurant.domain.MenuItemRepositoryImpl;
 import com.example.restaurant.domain.RestaurantRepository;
 import com.example.restaurant.domain.RestaurantRepositoryImpl;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,9 @@ class RestaurantControllerTest {
     @SpyBean(RestaurantRepositoryImpl.class) //컨트롤러에 우리가 원하는 객체를 넣을 수 있음
     private RestaurantRepository restaurantRepository;
 
+    @SpyBean(MenuItemRepositoryImpl.class)
+    private MenuItemRepository menuItemRepository;
+
     @Test
     public void list() throws Exception { //perform에서는 예외가 나올 수 있기 때문에 예외처리 해줌
         mvc.perform(get("/restaurant"))
@@ -36,7 +41,10 @@ class RestaurantControllerTest {
             ))
             .andExpect(content().string(
                     containsString("\"name\":\"Bab zip\"")
-            )); //가게 이름이 나오는가
+            ))
+            .andExpect(content().string(
+                    containsString("Kimchi")
+            ));
 
     }
 

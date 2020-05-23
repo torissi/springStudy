@@ -12,7 +12,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     
     public RestaurantRepositoryImpl() { //생성자로 데이터 주입
         restaurants.add(new Restaurant(1004L, "Bab zip", "Seoul"));
-        restaurants.add(new Restaurant(2020L, "Cyber food", "Seoul")); 
+        restaurants.add(new Restaurant(2020L, "Cyber food", "Seoul"));
     }
 
     @Override

@@ -42,6 +42,7 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
 - Spring IoC Container 가 해줌
 - DI는 객체간 의존관계를 스프링 IoC를 사용하여 관리해줌
 - 스프링은 @Component와 @Autowired를 사용하여 직접 관리 해줌
+- @Autowired : 컨트롤러가 만들어 질떄 스프링이 자동으로 객체를 주입
 - 의존성 주입을 통해 주입하면 좋은 점
   => 우리가 사용해야하는 객체를 다양하게 변경할 수 있음
 - 같은 방식으로 작동하는 여러 객체를 다루려면 어떻게 해야할까?
@@ -50,6 +51,14 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
   => 만든 repository를 구체적인 구현체로 바꾸고 거기서 사용할 인터페이스들을 별도로 분리하자
 
 
+* Layered Archtecture
+- 우리는 지금 UI Layer와 Domain Layer를 사용하고 있음
+- UI Layer : controller / Domain Layer : Restaurant와 repository가 있음
+- interfaces라는 패키지에는 controller가, domaoin 패키지에는 도메인 모델과 repository을 넣었음
+- 원래 Layered Archtecture에는 interfaces와 domain 사이에 Application Layer가 있음
+- 이번 강의에서 Application Layer를 구성할거임
+- application 패키지를 만들고 필요한 것을 확인하기 위해 Menu Item이라는 도메인 모델을 만들 예정
+- application layer에는 RestaurantService라는 객체가 들어가고, 복잡한 로직들을 모아서 처리할 예정
 
 
 
