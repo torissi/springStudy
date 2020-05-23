@@ -1,0 +1,59 @@
+* TDD
+Test Driven Development
+= 테스트 주도 개발
+= 목표 주도 개발
+= 사용자 중심 개발
+= 인터페이스 중심 개발
+
+- 올바르게 작동하는 깔끔한 코드 작성 목표
+- 올바르게 작동하는 코드를 만들고, 깔끔한 코드를 만들기 위해 리팩토링을 함
+- 리팩토링은 작동하는 것은 그대로 두고 내부 구현만 바꿈
+- 때문에 올바르게 작동하고 있다는 것을 보여주는 테스트 코드를 작성
+- 테스트 코드는 가장 먼저 만들자! = TDD
+- Red -> Green -> Refactoring 이라는 세가지 단계를 거침
+- Red : 실패하는 코드 : 우선 테스트 코드를 작성하면 무조건 실패하게 되어 있음
+- Green : 테스트가 성공할 수 있도록 메소드를 구현
+- Refactoring : 성공한 코드를 가지고 좀 더 깔끔하게 재 구현
+
+
+* Rest Api
+- 다양한 환경을 지원해야함 => 서로 다른 front-end => 하나의 백엔드
+- REpresentational State Transfer = Resource를 처리하는 방식
+- Resource에는 CRUD가 있음
+- Create/Post, Read/Get, Update/put/patch, Delete/Delete
+- Resource를 지정할 때 URI(Uniform Resource Identifier) 식별자를 사용함
+- 또는 URL(Uniform Resource Locator)라고 불리우는 지시자를 사용함
+- Resource는 Collection(여러 개)과 Member(그 안에 속한 개별적)로 나뉨
+- Collection : Read(List 목록을 가져오고), Create (새로운 리소스를 만듦)
+- Member : Read(Detail 각 목록의 상세정보), Update(각 개별 리소스를 수정), Delete(각 리소스를 삭제) 
+- 결과를 보내거나 얻을 때 JSON(JavaScript Object Notation)이라는 포맷을 사용
+- JSON은 자바스크립트에서 오브젝트를 표현하는 것과 마찬가지의 방법을 여러 언어, 환경에서 표준에서 사용
+
+
+* 의존성 주입(dependency Injection)
+- 의존성이란 의존관계를 의미
+- 의존 관계란 둘 이상의 객체가 서로 협력하는 것
+ex) A는 B에 의존하여 작업을 함 => A는 B를 사용 => B의 변화가 A에 영향을 줌
+   => B가 변하기 때문에 효과적으로 관리를 해야함
+ex) controller는 repository에 의존 => controller에 repository를 연결
+- controller에서 repository 생성 => 객체를 생성하는책임을 controller가 가짐
+  => 이렇게 만들어진 repository를 우리가 가지고 있는 멤버변수에 할당
+  => 하지만 객체를 만들고 연결을 해주는 것을 다른 곳에서 해주면 어떨까?
+- Spring IoC Container 가 해줌
+- DI는 객체간 의존관계를 스프링 IoC를 사용하여 관리해줌
+- 스프링은 @Component와 @Autowired를 사용하여 직접 관리 해줌
+- 의존성 주입을 통해 주입하면 좋은 점
+  => 우리가 사용해야하는 객체를 다양하게 변경할 수 있음
+- 같은 방식으로 작동하는 여러 객체를 다루려면 어떻게 해야할까?
+  => 만든 repository를 인터페이스로 변경을 하고
+  => 그 안에 코딩 부분을 실제 구현부로 만들어주자
+  => 만든 repository를 구체적인 구현체로 바꾸고 거기서 사용할 인터페이스들을 별도로 분리하자
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,12 @@
 package com.example.restaurant.interfaces;
 
+import com.example.restaurant.domain.RestaurantRepository;
+import com.example.restaurant.domain.RestaurantRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -19,6 +22,10 @@ class RestaurantControllerTest {
 
     @Autowired //스프링을 통해 주입해주자
     private MockMvc mvc;
+
+    // @WebMvcTest 테스트를 진행할 때에는 제대로 된 저장소를 사용할 수 없기 때문에 직접 의존성을 주입해줘야함
+    @SpyBean(RestaurantRepositoryImpl.class) //컨트롤러에 우리가 원하는 객체를 넣을 수 있음
+    private RestaurantRepository restaurantRepository;
 
     @Test
     public void list() throws Exception { //perform에서는 예외가 나올 수 있기 때문에 예외처리 해줌
