@@ -70,5 +70,27 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
 - 여전히 SpyBean으로 복잡하게 test코드에 여러 객체를 주입하는데, 가짜 객체를 이용하여 간단하게 할 예정
 
 
+* 가짜 객체(Mock Object)
+- 테스트 코드에 복잡하게 여러 객체를 주입하는 것에 대한 대안책
+- 스프링은 Mokito라는 프레임워크를 사용
+- 스프링은 POJO(Plain Old Java Object)를 사용하여 권장함
+- 그래서 Mokito같은 프레임워크를 제공
+
+- test하려는 대상 외의 것들을 가짜로 대체
+  => @MockBean/@Mock 사용하여 가짜 객체로 대체
+  => 실제로 이 서비스가 어떻게 되어 있는지와 상관없이 컨트롤러테스트가 만들어준 가짜를 가지고 처리함
+
+- @MockBean : 스프링에서 테스트할 때 사용
+- @Mock : 자바 객체만 이용하여 테스트(Mokito의 기능)
+   => MockitoAnnotations.initMocks(this);를 해줘야함
+   => Mockito 어노테이션이 선언된 변수들을 초기화하고 객체를 만듦(연결해줌..?)
+   => 이 과정이 없다면 NullPointException이 발생
+
+
+
+
+
+
+
 
 

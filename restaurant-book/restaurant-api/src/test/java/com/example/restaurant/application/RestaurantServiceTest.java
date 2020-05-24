@@ -4,22 +4,48 @@ import com.example.restaurant.domain.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.BDDMockito.given;
 
 class RestaurantServiceTest {
 
     private RestaurantService restaurantService;
+
+    @Mock
     private RestaurantRepository restaurantRepository;
+
+    @Mock
     private MenuItemRepository menuItemRepository;
 
     @BeforeEach
     public void setUp() {
-        restaurantRepository = new RestaurantRepositoryImpl();
-        menuItemRepository = new MenuItemRepositoryImpl();
+        mockRestaurantRepository();
+        mockMenuItemRepository();
         restaurantService = new RestaurantService(restaurantRepository, menuItemRepository);
+    }
+
+    private void mockRestaurantRepository() {
+        MockitoAnnotations.initMocks(this); //@Mock이 붙은 객체를 초기화. Mockito 어노테이션이 선언된 변수들은 객체를 만듦
+        List<Restaurant> restaurants = new ArrayList<>();
+        Restaurant restaurant = new Restaurant(1004L, "Bab zip", "Seoul");
+        restaurants.add(restaurant);
+
+        given(restaurantRepository.findAll()).willReturn(restaurants);
+
+        given(restaurantRepository.findById(1004L)).willReturn(restaurant);
+    }
+
+    private void mockMenuItemRepository() {
+        List<MenuItem> menuItem = new ArrayList<>();
+        menuItem.add(new MenuItem("Kimchi"));
+
+        given(menuItemRepository.findAllByRestaurantId(1004L)).willReturn(menuItem);
     }
 
     @Test
