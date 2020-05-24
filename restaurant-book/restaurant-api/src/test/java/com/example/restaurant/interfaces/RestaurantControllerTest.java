@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -15,10 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 //웹에 대한 요청 test 만들기
 @ExtendWith(SpringExtension.class) //스프링을 통해 이 테스트를 실행할거다
@@ -78,4 +81,20 @@ class RestaurantControllerTest {
                         containsString("\"name\":\"Cyber food\"")
                 ));
     }
+
+    @Test
+    public void create() throws Exception {
+        mvc.perform(post("/restaurant")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"BeBe\", \"address\":\"Seoul\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("location", "/restaurant/1234"))
+                .andExpect(content().string("{}"));
+
+        verify(restaurantService).addRestaurant(any());
+    }
 }
+
+/*
+* any() : 어떤 객체가 들어오던지 실행만 되면 Ok.
+* */
