@@ -1,7 +1,9 @@
 package com.example.restaurant.application;
 
-import com.example.restaurant.domain.*;
-import org.junit.jupiter.api.BeforeAll;
+import com.example.restaurant.domain.MenuItem;
+import com.example.restaurant.domain.MenuItemRepository;
+import com.example.restaurant.domain.Restaurant;
+import com.example.restaurant.domain.RestaurantRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 class RestaurantServiceTest {
@@ -65,10 +68,16 @@ class RestaurantServiceTest {
         MenuItem menuItem = restaurant.getMenuItems().get(0);
         assertThat(menuItem.getName()).isEqualTo("Kimchi");
     }
-}
 
-/* @Autowire를 쓰면 스프링이 객체를 자동 주입
-*그러나 우리는 지금 일반적인 test를 진행중이기 떄문에 의존관계를 주입할 수 없음
-* 그래서 직접 repository를 service에 연결해줘야함
-* 그 작업이 @BeforeAll 붙은 곳임
-* */
+    @Test
+    public void addRestaurant() {
+        Restaurant restaurant = new Restaurant("BeBe", "Seoul");
+        Restaurant saved = new Restaurant(1234L, "BeBe", "Seoul");
+
+        given(restaurantRepository.save(any())).willReturn(saved);
+
+        Restaurant created = restaurantService.addRestaurant(restaurant);
+
+        assertThat(created.getId()).isEqualTo(1234L);
+    }
+}
