@@ -95,7 +95,9 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
 - @Entity
   => identofier로 구분되는 객체
   => 관계형 데이터베이스에서도 각 데이터를 구분하는데 emtity라는 단위를 사용
-
+- @GeneratedValue
+  => @id와 함께 사용
+  => 자동으로 id를 할당해 줌
 
 
 
