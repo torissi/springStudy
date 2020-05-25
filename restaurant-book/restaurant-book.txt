@@ -87,6 +87,14 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
    => 이 과정이 없다면 NullPointException이 발생
 
 
+* JPA
+- 지금까지 만든 도메인객체는 모두 메모리에서 관리됨 => 프로그램을 종료하면 메모리가 휘발됨
+- 그래서 종료되더라도 데이터가 남아있는 영속화작업(persistence)이 필요
+- 자바는 영속화에 대한 표준을 가지고 있음 => JPA(Java Persistence API)
+- JPA에서 가장 유명한 라이브러리는 Hibernate임
+- @Entity
+  => identofier로 구분되는 객체
+  => 관계형 데이터베이스에서도 각 데이터를 구분하는데 emtity라는 단위를 사용
 
 
 

@@ -1,14 +1,25 @@
 package com.example.restaurant.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Restaurant {
 
-    private String name;
-    private String address;
+    @Id
+    @GeneratedValue //
     private Long id;
-    private List<MenuItem> menuItems = new ArrayList<>();
+
+    private String name;
+
+    private String address;
+
+    @Transient // json으로 값을 넘겨주기 위해 만들었었음. 빌드하지 않고 통과되도록 설정.
+    private List<MenuItem> menuItems = new ArrayList<MenuItem>();
 
     public Restaurant() {}
 
