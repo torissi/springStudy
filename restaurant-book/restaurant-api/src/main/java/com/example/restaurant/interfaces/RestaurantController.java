@@ -1,10 +1,7 @@
 package com.example.restaurant.interfaces;
 
 import com.example.restaurant.application.RestaurantService;
-import com.example.restaurant.domain.MenuItem;
-import com.example.restaurant.domain.MenuItemRepository;
 import com.example.restaurant.domain.Restaurant;
-import com.example.restaurant.domain.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +41,14 @@ public class RestaurantController {
 
         URI location = new URI("/restaurant/" + restaurant.getId());
         return ResponseEntity.created(location).body("{}");
+    }
+
+    @PatchMapping("/restaurant/{id}")
+    public String update(@PathVariable("id") Long id, @RequestBody Restaurant resource) {
+        String name = resource.getName();
+        String address = resource.getAddress();
+
+        restaurantService.updateRestaurant(id, name, address);
+        return "{}";
     }
 }
