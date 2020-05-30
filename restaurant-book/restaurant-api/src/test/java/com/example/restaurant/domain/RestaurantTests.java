@@ -10,15 +10,26 @@ class RestaurantTests {
 
     @Test
     public void creation() {
-        Restaurant restaurant = new Restaurant(1004L,"Bab zip", "Seoul"); //Bap zip은 가게 주소
-        assertThat(restaurant.getId()).isEqualTo(1004L);
+          //builder pattern // 아래의 정보를 삽입하고 빌드를 하자
+        Restaurant restaurant = Restaurant.builder()
+                .id(1004L)
+                .name("Bab zip")
+                .address("Seoul")
+                .build();
+
+                assertThat(restaurant.getId()).isEqualTo(1004L);
         assertThat(restaurant.getName()).isEqualTo("Bab zip");
         assertThat(restaurant.getAddress()).isEqualTo("Seoul");
     }
 
     @Test
     public void information() {
-        Restaurant restaurant = new Restaurant(1004L, "Bab zip", "Seoul");
+        Restaurant restaurant = Restaurant.builder()
+                .id(1004L)
+                .name("Bab zip")
+                .address("Seoul")
+                .build();
+
         assertThat(restaurant.getInformation()).isEqualTo("Bab zip in Seoul");
 
     }

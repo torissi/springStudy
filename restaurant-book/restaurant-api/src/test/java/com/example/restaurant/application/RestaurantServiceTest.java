@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,12 @@ class RestaurantServiceTest {
     private void mockRestaurantRepository() {
         MockitoAnnotations.initMocks(this); //@Mock이 붙은 객체를 초기화. Mockito 어노테이션이 선언된 변수들은 객체를 만듦
         List<Restaurant> restaurants = new ArrayList<>();
-        Restaurant restaurant = new Restaurant(1004L, "Bab zip", "Seoul");
+
+        Restaurant restaurant = Restaurant.builder()
+                .id(1004L)
+                .name("Bab zip")
+                .address("Seoul")
+                .build();
         restaurants.add(restaurant);
 
         given(restaurantRepository.findAll()).willReturn(restaurants);
@@ -47,7 +53,9 @@ class RestaurantServiceTest {
 
     private void mockMenuItemRepository() {
         List<MenuItem> menuItem = new ArrayList<>();
-        menuItem.add(new MenuItem("Kimchi"));
+        menuItem.add(MenuItem.builder()
+                .name("Kimchi")
+                .build());
 
         given(menuItemRepository.findAllByRestaurantId(1004L)).willReturn(menuItem);
     }
@@ -72,10 +80,16 @@ class RestaurantServiceTest {
 
     @Test
     public void addRestaurant() {
-        Restaurant restaurant = new Restaurant("BeBe", "Seoul");
-        Restaurant saved = new Restaurant(1234L, "BeBe", "Seoul");
+        given(restaurantRepository.save(any())).will(invocation -> {
+            Restaurant restaurant = invocation.getArgument(0);
+            restaurant.setId(1234L);
+            return restaurant;
+        });
 
-        given(restaurantRepository.save(any())).willReturn(saved);
+        Restaurant restaurant = Restaurant.builder()
+                .name("BeBe")
+                .address("Seoul")
+                .build();
 
         Restaurant created = restaurantService.addRestaurant(restaurant);
 
@@ -84,7 +98,11 @@ class RestaurantServiceTest {
 
     @Test
     public void updateRestaurant() {
-        Restaurant restaurant = new Restaurant(1004L, "Bab zip", "Seoul");
+        Restaurant restaurant = Restaurant.builder()
+                .id(1004L)
+                .name("Bab zip")
+                .address("Seoul")
+                .build();
 
         given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
 

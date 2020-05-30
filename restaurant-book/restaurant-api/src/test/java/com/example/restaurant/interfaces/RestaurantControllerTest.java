@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -36,7 +37,11 @@ class RestaurantControllerTest {
     @Test
     public void list() throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(new Restaurant(1004L, "Bab zip", "Seoul"));
+        restaurants.add(Restaurant.builder()
+                        .id(1004L)
+                        .name("Bab zip")
+                        .address("Seoul")
+                        .build());
         given(restaurantService.getRestaurants()).willReturn(restaurants); //restaurantService가 가짜로 리스트를 불러옴
 
         mvc.perform(get("/restaurant"))
@@ -52,10 +57,19 @@ class RestaurantControllerTest {
 
     @Test
     public void detail() throws Exception {
-        Restaurant restaurant1 = new Restaurant(1004L, "Bab zip", "Seoul");
-        restaurant1.addMenuItem(new MenuItem("Kimchi"));
-        Restaurant restaurant2 = new Restaurant(2020L, "Cyber food", "Seoul");
-        restaurant2.addMenuItem(new MenuItem("Kimchi"));
+        Restaurant restaurant1 = Restaurant.builder()
+                .id(1004L)
+                .name("Bab zip")
+                .address("Seoul")
+                .build();
+        MenuItem menuItem = MenuItem.builder().name("Kimchi").build();
+        restaurant1.setMenuItems(Arrays.asList(menuItem));
+        Restaurant restaurant2 = Restaurant.builder()
+                .id(2020L)
+                .name("Cyber food")
+                .address("Seoul")
+                .build();
+        restaurant2.setMenuItems(Arrays.asList(menuItem));
 
         given(restaurantService.getRestaurantById(1004L)).willReturn(restaurant1);
         given(restaurantService.getRestaurantById(2020L)).willReturn(restaurant2);
@@ -83,6 +97,15 @@ class RestaurantControllerTest {
 
     @Test
     public void create() throws Exception {
+        given(restaurantService.addRestaurant(any())).will(invocation -> {
+           Restaurant restaurant = invocation.getArgument(0);
+           return Restaurant.builder()
+                   .id(1234L)
+                   .name(restaurant.getName())
+                   .address(restaurant.getAddress())
+                   .build();
+        });
+
         mvc.perform(post("/restaurant")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"BeBe\", \"address\":\"Seoul\"}"))
