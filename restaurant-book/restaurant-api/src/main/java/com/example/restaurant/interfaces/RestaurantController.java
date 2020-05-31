@@ -2,10 +2,13 @@ package com.example.restaurant.interfaces;
 
 import com.example.restaurant.application.RestaurantService;
 import com.example.restaurant.domain.Restaurant;
+import com.example.restaurant.domain.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -32,7 +35,7 @@ public class RestaurantController {
     }
 
     @PostMapping("/restaurant")
-    public ResponseEntity<?> create(@RequestBody Restaurant resource) throws URISyntaxException {
+    public ResponseEntity<?> create(@Valid @RequestBody Restaurant resource) throws URISyntaxException {
         Restaurant restaurant = restaurantService.addRestaurant(
                 Restaurant.builder()
                 .name(resource.getName())
@@ -44,7 +47,8 @@ public class RestaurantController {
     }
 
     @PatchMapping("/restaurant/{id}")
-    public String update(@PathVariable("id") Long id, @RequestBody Restaurant resource) {
+    public String update(@PathVariable("id") Long id,
+                         @RequestBody @Valid Restaurant resource) {
         String name = resource.getName();
         String address = resource.getAddress();
 

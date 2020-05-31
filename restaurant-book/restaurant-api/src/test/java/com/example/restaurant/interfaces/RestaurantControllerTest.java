@@ -2,12 +2,12 @@ package com.example.restaurant.interfaces;
 
 import com.example.restaurant.application.RestaurantService;
 import com.example.restaurant.domain.*;
+import com.example.restaurant.domain.RestaurantNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -52,11 +52,10 @@ class RestaurantControllerTest {
             .andExpect(content().string(
                     containsString("\"name\":\"Bab zip\"")
             ));
-
     }
 
     @Test
-    public void detail() throws Exception {
+    public void detailWithExisted() throws Exception {
         Restaurant restaurant1 = Restaurant.builder()
                 .id(1004L)
                 .name("Bab zip")
@@ -95,8 +94,18 @@ class RestaurantControllerTest {
                 ));
     }
 
+   /* @Test
+    public void detailWithNotExisted() throws Exception {
+        given(restaurantService.getRestaurantById(404L))
+                .willThrow(new RestaurantNotFoundException(404L));
+
+        mvc.perform(get("/restaurant/404"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("{}"));
+    }*/
+
     @Test
-    public void create() throws Exception {
+    public void createVaildData() throws Exception { //유효한 데이터 입력
         given(restaurantService.addRestaurant(any())).will(invocation -> {
            Restaurant restaurant = invocation.getArgument(0);
            return Restaurant.builder()
@@ -116,8 +125,16 @@ class RestaurantControllerTest {
         verify(restaurantService).addRestaurant(any());
     }
 
+    /*@Test
+    public void createWithInvaildData() throws Exception { //유효하지 않은 데이터 입력
+        mvc.perform(post("/restaurant")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"\", \"address\":\"\"}"))
+                .andExpect(status().isBadRequest());
+    }*/
+
     @Test
-    public void update() throws Exception {
+    public void updateWithValidData() throws Exception {
         mvc.perform(patch("/restaurant/1004")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Bab zip\", \"address\":\"Seoul\"}"))
@@ -125,6 +142,14 @@ class RestaurantControllerTest {
 
         verify(restaurantService).updateRestaurant(1004L, "Bab zip", "Seoul");
     }
+
+    /*@Test
+    public void updateWithInvalidData() throws Exception {
+        mvc.perform(patch("/restaurant/1004")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"\", \"address\":\"\"}"))
+                .andExpect(status().isBadRequest());
+    }*/
 }
 
 /*

@@ -124,7 +124,20 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
 - class에 어노테이션을 붙이면 필요하지 않은 부분까지 생성된다는 단점이 있음
 
 
+* Validation(유효성 검사)
+- 사용자들이 입력하는 데이터가 유효한지 검증하는 것
+- @NotNull, @NotEmpty, @Size(max=10) 등
+- @Valid를 사용하면 스프링이 알아서 검사하여 유효성에 맞지 않으면 에러를 발생시켜줌
 
+
+* Not Found
+- 우리가 uri로 접근을 하는데 실제 존재하지 않는 uri일 수 있음
+- HTTP Status 404 에러를 처리해야함
+- 실제로 예외를 던져주고 그 예외를 받아서 처리하는 @ControllerAdvice를 사용하여 처리
+- @ControllerAdvice 
+   => 별도의 속성값이 없이 사용하면 모든 패키지 전역에 있는 컨트롤러의 예외를 잡아 처리
+- @ExceptionHandler(RestaurantNotFoundException.class)
+   => @Controller, @RestController가 적용된 Bean내에서 발생하는 예외를 잡아 하나의 메서드에서 처리해주는 기능
 
 
 

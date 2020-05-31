@@ -1,14 +1,14 @@
 package com.example.restaurant.application;
 
-import com.example.restaurant.domain.MenuItem;
-import com.example.restaurant.domain.MenuItemRepository;
-import com.example.restaurant.domain.Restaurant;
-import com.example.restaurant.domain.RestaurantRepository;
+import com.example.restaurant.domain.*;
+import com.example.restaurant.interfaces.RestaurantErrorAdvice;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 class RestaurantServiceTest {
 
@@ -69,13 +70,19 @@ class RestaurantServiceTest {
     }
 
     @Test
-    public void getRestaurantById() {
+    public void getRestaurantByIdWithExisted() {
         Restaurant restaurant = restaurantService.getRestaurantById(1004L);
 
         assertThat(restaurant.getId()).isEqualTo(1004L);
 
         MenuItem menuItem = restaurant.getMenuItems().get(0);
         assertThat(menuItem.getName()).isEqualTo("Kimchi");
+    }
+
+    @Test
+    public void getRestaurantByIdWithNotExisted() {
+        restaurantService.getRestaurantById(404L);
+        Assertions.assertThrows(RestaurantNotFoundException.class, () -> {});
     }
 
     @Test
