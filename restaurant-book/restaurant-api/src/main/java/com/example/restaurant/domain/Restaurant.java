@@ -1,5 +1,6 @@
 package com.example.restaurant.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -29,6 +30,7 @@ public class Restaurant {
     private String address;
 
     @Transient // json으로 값을 넘겨주기 위해 만들었었음. 빌드하지 않고 통과되도록 설정.
+    @JsonInclude(JsonInclude.Include.NON_NULL) //null이 아닐 떄만 json에 넣어줘
     private List<MenuItem> menuItems;
 
     public String getInformation() {
