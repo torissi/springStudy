@@ -81,7 +81,7 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
   => 실제로 이 서비스가 어떻게 되어 있는지와 상관없이 컨트롤러테스트가 만들어준 가짜를 가지고 처리함
 
 - @MockBean : 스프링에서 테스트할 때 사용
-- @Mock : 자바 객체만 이용하여 테스트(Mokito의 기능)
+- @Mock : 자바 객체만 이용하여 테스트(Mokito의 기능) // 가짜 객체를 만들어 사용하는 방법
    => MockitoAnnotations.initMocks(this);를 해줘야함
    => Mockito 어노테이션이 선언된 변수들을 초기화하고 객체를 만듦(연결해줌..?)
    => 이 과정이 없다면 NullPointException이 발생
