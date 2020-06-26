@@ -16,6 +16,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,6 +54,7 @@ public class ReviewControllerTests {
         mvc.perform(post("/restaurants/1/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"))
+                .andDo(print())
                 .andExpect(status().isBadRequest());
 
         verify(reviewService, never()).addReview(any());

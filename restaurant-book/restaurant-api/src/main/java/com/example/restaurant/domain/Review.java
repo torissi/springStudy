@@ -5,9 +5,8 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -16,18 +15,19 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Review {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @NotEmpty
+    @NotBlank(message = "이름 넣어라")
     private String name;
 
     @NotNull
     private Integer score;
 
-    @NotEmpty
+    @NotBlank(message = "ㅅㅁ 넣어라")
     private String description;
 }
