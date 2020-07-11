@@ -22,6 +22,8 @@ public class Review {
     @GeneratedValue
     private Long id;
 
+    private Long restaurantId;
+
     @NotBlank(message = "이름 넣어라")
     private String name;
 
@@ -30,4 +32,8 @@ public class Review {
 
     @NotBlank(message = "ㅅㅁ 넣어라")
     private String description;
+
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
 }
