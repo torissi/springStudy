@@ -24,22 +24,14 @@ class RestaurantServiceTest {
     @Mock
     private RestaurantRepository restaurantRepository;
 
-    @Mock
-    private MenuItemRepository menuItemRepository;
-
-    @Mock
-    private ReviewRepository reviewRepository;
-
     @BeforeEach
     public void setUp() {
+        MockitoAnnotations.initMocks(this); //@Mock이 붙은 객체를 초기화. Mockito 어노테이션이 선언된 변수들은 객체를 만듦
         mockRestaurantRepository();
-        mockMenuItemRepository();
-        mockReviewRepository();
-        restaurantService = new RestaurantService(restaurantRepository, menuItemRepository, reviewRepository);
+        restaurantService = new RestaurantService(restaurantRepository);
     }
 
     private void mockRestaurantRepository() {
-        MockitoAnnotations.initMocks(this); //@Mock이 붙은 객체를 초기화. Mockito 어노테이션이 선언된 변수들은 객체를 만듦
         List<Restaurant> restaurants = new ArrayList<>();
 
         Restaurant restaurant = Restaurant.builder()
@@ -54,28 +46,6 @@ class RestaurantServiceTest {
         given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
     }
 
-    private void mockMenuItemRepository() {
-        List<MenuItem> menuItem = new ArrayList<>();
-        menuItem.add(MenuItem.builder()
-                .name("Kimchi")
-                .build());
-
-        given(menuItemRepository.findAllByRestaurantId(1004L)).willReturn(menuItem);
-    }
-
-    private void mockReviewRepository() {
-        List<Review> reviews = new ArrayList<>();
-        reviews.add(
-                Review.builder()
-                .name("BeRyong")
-                .score(1)
-                .description("Bad")
-                .build()
-        );
-
-        given(reviewRepository.findAllByRestaurantId(1004L)).willReturn(reviews);
-    }
-
     @Test
     public void getRestaurants() {
         List<Restaurant> restaurants = restaurantService.getRestaurants();
@@ -88,16 +58,7 @@ class RestaurantServiceTest {
     public void getRestaurantByIdWithExisted() {
         Restaurant restaurant = restaurantService.getRestaurantById(1004L);
 
-        verify(menuItemRepository).findAllByRestaurantId(eq(1004L));
-        verify(reviewRepository).findAllByRestaurantId(eq(1004L));
-
         assertThat(restaurant.getId()).isEqualTo(1004L);
-
-        MenuItem menuItem = restaurant.getMenuItems().get(0);
-        assertThat(menuItem.getName()).isEqualTo("Kimchi");
-
-        Review review = restaurant.getReviews().get(0);
-        assertThat(review.getDescription()).isEqualTo("Bad");
     }
 
     @Test

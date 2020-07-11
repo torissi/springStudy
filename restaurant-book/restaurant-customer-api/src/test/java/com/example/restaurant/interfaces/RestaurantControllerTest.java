@@ -100,52 +100,6 @@ class RestaurantControllerTest {
                 .andExpect(content().string("{}"));
     }*/
 
-    @Test
-    public void createVaildData() throws Exception { //유효한 데이터 입력
-        given(restaurantService.addRestaurant(any())).will(invocation -> {
-           Restaurant restaurant = invocation.getArgument(0);
-           return Restaurant.builder()
-                   .id(1234L)
-                   .name(restaurant.getName())
-                   .address(restaurant.getAddress())
-                   .build();
-        });
-
-        mvc.perform(post("/restaurant")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"BeBe\", \"address\":\"Seoul\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(header().string("location", "/restaurant/1234"))
-                .andExpect(content().string("{}"));
-
-        verify(restaurantService).addRestaurant(any());
-    }
-
-    /*@Test
-    public void createWithInvaildData() throws Exception { //유효하지 않은 데이터 입력
-        mvc.perform(post("/restaurant")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"\", \"address\":\"\"}"))
-                .andExpect(status().isBadRequest());
-    }*/
-
-    @Test
-    public void updateWithValidData() throws Exception {
-        mvc.perform(patch("/restaurant/1004")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"Bab zip\", \"address\":\"Seoul\"}"))
-                .andExpect(status().isOk());
-
-        verify(restaurantService).updateRestaurant(1004L, "Bab zip", "Seoul");
-    }
-
-    /*@Test
-    public void updateWithInvalidData() throws Exception {
-        mvc.perform(patch("/restaurant/1004")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"\", \"address\":\"\"}"))
-                .andExpect(status().isBadRequest());
-    }*/
 }
 
 /*
