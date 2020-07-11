@@ -140,5 +140,11 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
    => @Controller, @RestController가 적용된 Bean내에서 발생하는 예외를 잡아 하나의 메서드에서 처리해주는 기능
 
 
+* 프로젝트 분리
+- 사용자
+    => 서비스는 여러 사용자가 사용 (관리자, 고객)
+    => 때문에 각각 서로 다른 서비스를 제공해야함
+    => 때문에 사용자 별로 api를 분리하는 것이 중요함 (admin-api, customer-api)
+    => 두 사용자는 유사한 도메인 모델을 공유하기 때문에 함께 사용할 common api도 만들기
 
 
