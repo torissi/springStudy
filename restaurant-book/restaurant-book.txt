@@ -148,3 +148,4 @@ ex) controller는 repository에 의존 => controller에 repository를 연결
     => 두 사용자는 유사한 도메인 모델을 공유하기 때문에 함께 사용할 common api도 만들기
 
 
+
