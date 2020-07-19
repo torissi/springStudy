@@ -40,12 +40,13 @@ class RestaurantControllerTest {
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(Restaurant.builder()
                         .id(1004L)
+                        .categoryId(1L)
                         .name("Bab zip")
                         .address("Seoul")
                         .build());
-        given(restaurantService.getRestaurants()).willReturn(restaurants); //restaurantService가 가짜로 리스트를 불러옴
+        given(restaurantService.getRestaurants("Seoul", 1L)).willReturn(restaurants); //restaurantService가 가짜로 리스트를 불러옴
 
-        mvc.perform(get("/restaurant"))
+        mvc.perform(get("/restaurant?region=Seoul&categoryId=1"))
             .andExpect(status().isOk()) //통신 상태가 200인가
             .andExpect(content().string(
                     containsString("\"id\":1004")

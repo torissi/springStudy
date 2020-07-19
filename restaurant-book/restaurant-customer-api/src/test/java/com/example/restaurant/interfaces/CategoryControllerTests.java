@@ -1,7 +1,7 @@
 package com.example.restaurant.interfaces;
 
-import com.example.restaurant.application.RegionService;
-import com.example.restaurant.domain.Region;
+import com.example.restaurant.application.CategoryService;
+import com.example.restaurant.domain.Category;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -24,39 +23,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(RegionController.class)
-class RegionControllerTests {
+@WebMvcTest(CategoryController.class)
+public class CategoryControllerTests {
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private RegionService regionService;
+    private CategoryService categoryService;
 
     @Test
     public void list() throws Exception {
-        List<Region> regions = new ArrayList<>();
-        regions.add(Region.builder().name("Seoul").build());
+        List<Category> categories = new ArrayList<>();
+        categories.add(Category.builder().name("Korea Food").build());
 
-        given(regionService.getRigions()).willReturn(regions);
+        given(categoryService.getCategoies()).willReturn(categories);
 
-        mvc.perform(get("/regions"))
+        mvc.perform(get("/categories"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Seoul")));
+                .andExpect(content().string(containsString("Korea Food")));
     }
 
-    @Test
-    public void create() throws Exception {
-        Region region = Region.builder().name("Seoul").build();
-
-        given(regionService.addRegion("Seoul")).willReturn(region);
-
-        mvc.perform(post("/regions")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\" : \"Seoul\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(content().string("{}"));
-
-        verify(regionService).addRegion("Seoul");
-    }
 }

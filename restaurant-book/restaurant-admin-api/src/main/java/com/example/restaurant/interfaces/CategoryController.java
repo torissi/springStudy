@@ -1,6 +1,8 @@
 package com.example.restaurant.interfaces;
 
+import com.example.restaurant.application.CategoryService;
 import com.example.restaurant.application.RegionService;
+import com.example.restaurant.domain.Category;
 import com.example.restaurant.domain.Region;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,29 +13,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class RegionController {
+public class CategoryController {
 
     @Autowired
-    private RegionService regionService;
+    private CategoryService categoryService;
 
-    @GetMapping("/regions")
-    public List<Region> list() {
-        List<Region> regions = regionService.getRigions();
+    @GetMapping("/categories")
+    public List<Category> list() {
+        List<Category> regions = categoryService.getCategoies();
 
         return regions;
     }
 
-    @PostMapping("/regions")
-    public ResponseEntity<?> create(@RequestBody Region resource) throws URISyntaxException {
+    @PostMapping("/categories")
+    public ResponseEntity<?> create(@RequestBody Category resource) throws URISyntaxException {
         String name = resource.getName();
 
-        Region region = regionService.addRegion(name);
+        Category category = categoryService.addCategory(name);
 
-        String url = "/regions/" + region.getId();
+        String url = "/categoties/" + category.getId();
 
         return ResponseEntity.created(new URI(url)).body("{}");
     }

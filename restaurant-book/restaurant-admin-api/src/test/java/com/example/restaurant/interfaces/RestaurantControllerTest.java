@@ -39,6 +39,7 @@ class RestaurantControllerTest {
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(Restaurant.builder()
                         .id(1004L)
+                        .categoryId(1L)
                         .name("Bab zip")
                         .address("Seoul")
                         .build());
@@ -58,6 +59,7 @@ class RestaurantControllerTest {
     public void detailWithExisted() throws Exception {
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
+                .categoryId(1L)
                 .name("Bab zip")
                 .address("Seoul")
                 .build();
@@ -91,6 +93,7 @@ class RestaurantControllerTest {
            Restaurant restaurant = invocation.getArgument(0);
            return Restaurant.builder()
                    .id(1234L)
+                   .categoryId(1L)
                    .name(restaurant.getName())
                    .address(restaurant.getAddress())
                    .build();
@@ -98,7 +101,7 @@ class RestaurantControllerTest {
 
         mvc.perform(post("/restaurant")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"BeBe\", \"address\":\"Seoul\"}"))
+                .content("{\"categoryId\":1, \"name\":\"BeBe\", \"address\":\"Seoul\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/restaurant/1234"))
                 .andExpect(content().string("{}"));
@@ -118,7 +121,7 @@ class RestaurantControllerTest {
     public void updateWithValidData() throws Exception {
         mvc.perform(patch("/restaurant/1004")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"Bab zip\", \"address\":\"Seoul\"}"))
+                .content("{\"categoryId\":1, \"name\":\"Bab zip\", \"address\":\"Seoul\"}"))
                 .andExpect(status().isOk());
 
         verify(restaurantService).updateRestaurant(1004L, "Bab zip", "Seoul");
