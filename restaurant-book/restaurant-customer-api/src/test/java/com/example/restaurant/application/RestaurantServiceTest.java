@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -108,8 +109,9 @@ class RestaurantServiceTest {
 
     @Test
     public void getRestaurantByIdWithNotExisted() {
-        restaurantService.getRestaurantById(404L);
-        Assertions.assertThrows(RestaurantNotFoundException.class, () -> {});
+        assertThatThrownBy(() -> {
+            restaurantService.getRestaurantById(404L);
+        }).isInstanceOf(RestaurantNotFoundException.class);
     }
 
     @Test
