@@ -23,14 +23,13 @@ public class Review {
     private Long id;
 
     private Long restaurantId;
-
-    @NotBlank(message = "이름 넣어라")
+    
     private String name;
 
     @NotNull
     private Integer score;
 
-    @NotBlank(message = "ㅅㅁ 넣어라")
+    @NotBlank(message = "설명필요")
     private String description;
 
     public Long getRestaurantId() {
