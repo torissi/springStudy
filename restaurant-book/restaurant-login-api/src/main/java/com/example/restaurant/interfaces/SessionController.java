@@ -1,6 +1,5 @@
 package com.example.restaurant.interfaces;
 
-import com.example.restaurant.application.SessionResponseDto;
 import com.example.restaurant.application.UserService;
 import com.example.restaurant.domain.User;
 import com.example.restaurant.utils.JwtUtil;
@@ -29,7 +28,8 @@ public class SessionController {
 
         User user = userService.authenticate(email, password);
 
-        final String accesToken = jwtUtil.createToken(user.getId(), user.getName());
+        final String accesToken = jwtUtil.createToken(user.getId(), user.getName(),
+                user.isRestaurantOwner() ? user.getRestaurantId() : null);
 
         String url = "/session";
         return ResponseEntity.created(new URI(url)).body(

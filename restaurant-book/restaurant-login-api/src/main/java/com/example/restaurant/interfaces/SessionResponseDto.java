@@ -1,4 +1,4 @@
-package com.example.restaurant.application;
+package com.example.restaurant.interfaces;
 
 import lombok.Builder;
 import lombok.Data;

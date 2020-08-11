@@ -9,11 +9,14 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.12/48e4e5d60309ebd833bc528dcf77668eab3cd72c/lombok-1.18.12.jar" />
         </processorPath>
         <module name="restaurant.restaurant-admin-api.main" />
-        <module name="restaurant.restaurant-customer-api.main" />
+        <module name="restaurant.restaurant-login-api.main" />
         <module name="restaurant.restaurant-common.main" />
+        <module name="restaurant.restaurant-customer-api.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="restaurant.rastaurant-login-api.main" target="1.8" />
+      <module name="restaurant.rastaurant-login-api.test" target="1.8" />
       <module name="restaurant.restaurant-api" target="1.8" />
       <module name="restaurant.restaurant-api.main" target="1.8" />
       <module name="restaurant.restaurant-api.test" target="1.8" />
