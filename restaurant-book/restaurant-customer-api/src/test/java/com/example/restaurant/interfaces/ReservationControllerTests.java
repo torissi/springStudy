@@ -1,6 +1,7 @@
 package com.example.restaurant.interfaces;
 
 import com.example.restaurant.application.ReservationService;
+import com.example.restaurant.domain.Reservation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,6 +31,11 @@ class ReservationControllerTests {
     @Test
     public void create() throws Exception {
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEwMDQsIm5hbWUiOiJqb29oZWUifQ.Lx34QEtZtn2EBdLgNO5QLUGe17sr_fVjX5c0w59i2aQ";
+
+        Reservation mockReservation = Reservation.builder().id(12L).build();
+        given(reservationService.addReservation(any(), any(), any(), any(), any(), any()))
+        .willReturn(mockReservation);
+
         Long userId = 1004L;
         String name = "joohee";
         String date = "2020-10-20";

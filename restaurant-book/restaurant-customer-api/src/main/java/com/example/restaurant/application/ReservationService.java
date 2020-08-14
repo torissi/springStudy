@@ -1,5 +1,8 @@
 package com.example.restaurant.application;
 
+import com.example.restaurant.domain.Reservation;
+import com.example.restaurant.domain.ReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -8,7 +11,23 @@ import javax.transaction.Transactional;
 @Transactional
 public class ReservationService {
 
-    public void addReservation(Long restaurantId, Long userId, String name,
-                               String date, String time, Integer partySize) {
+    private ReservationRepository reservationRepository;
+
+    @Autowired
+    public ReservationService(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
+    }
+
+    public Reservation addReservation(Long restaurantId, Long userId, String name,
+                                      String date, String time, Integer partySize) {
+        Reservation build = Reservation.builder()
+                .restaurantId(restaurantId)
+                .userId(userId)
+                .name(name)
+                .date(date)
+                .time(time)
+                .partySize(partySize).build();
+
+        return reservationRepository.save(build);
     }
 }
