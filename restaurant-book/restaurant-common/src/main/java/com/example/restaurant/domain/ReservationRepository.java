@@ -2,7 +2,12 @@ package com.example.restaurant.domain;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface ReservationRepository extends CrudRepository<Reservation, Long> {
+import java.util.List;
+
+public interface ReservationRepository
+        extends CrudRepository<Reservation, Long> {
+
+    List<Reservation> findAllByRestaurantId(Long restaurantId);
 
     Reservation save(Reservation reservation);
 }
