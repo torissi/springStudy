@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$/restaurant-book" />
             <option value="$PROJECT_DIR$/restaurant-book/restaurant-admin-api" />
+            <option value="$PROJECT_DIR$/restaurant-book/restaurant-api" />
             <option value="$PROJECT_DIR$/restaurant-book/restaurant-common" />
             <option value="$PROJECT_DIR$/restaurant-book/restaurant-customer-api" />
             <option value="$PROJECT_DIR$/restaurant-book/restaurant-login-api" />
